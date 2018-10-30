@@ -5,12 +5,11 @@ import matplotlib as mpl
 mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 from IPython.display import display
-from fstring import fstring
 import re, string
 
-train = pd.read_csv('input/train.csv')
-test = pd.read_csv('input/test.csv')
-subm = pd.read_csv('input/sample_submission.csv')
+train = pd.read_csv('./input/train.csv')
+test = pd.read_csv('./input/test.csv')
+subm = pd.read_csv('./input/sample_submission.csv')
 
 display(train.head())
 
@@ -31,7 +30,7 @@ COMMENT = 'comment_text'
 train[COMMENT].fillna("unknown", inplace=True)
 test[COMMENT].fillna("unknown", inplace=True)
 
-re_tok = re.compile(fstring'([{string.punctuation}“”¨«»®´·º½¾¿¡§£₤‘’])')
+re_tok = re.compile(f'([{string.punctuation}“”¨«»®´·º½¾¿¡§£₤‘’])')
 def tokenize(s): return re_tok.sub(r' \1 ', s).split()
 
 n = train.shape[0]
@@ -67,4 +66,4 @@ for i, j in enumerate(label_cols):
 
 submid = pd.DataFrame({'id': subm["id"]})
 submission = pd.concat([submid, pd.DataFrame(preds, columns = label_cols)], axis=1)
-submission.to_csv('submission.csv', index=False)
+submission.to_csv('./input/nb_svm_submission.csv', index=False)
