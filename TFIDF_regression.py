@@ -5,8 +5,8 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer,TfidfVectorizer
 from sklearn.metrics import log_loss,confusion_matrix,classification_report,roc_curve,auc
 
-train = pd.read_csv("train.csv")
-test = pd.read_csv("test.csv")
+train = pd.read_csv("input/train.csv")
+test = pd.read_csv("input/test.csv")
 
 
 vect_word = TfidfVectorizer(max_features=20000, lowercase=True, analyzer='word',
@@ -17,7 +17,7 @@ tr_vect = vect_word.fit_transform(train['comment_text'])
 ts_vect = vect_word.transform(test['comment_text'])
 
 X = tr_vect
-x_test = ts_vect 
+x_test = ts_vect
 
 target_col = ['toxic', 'severe_toxic', 'obscene', 'threat','insult', 'identity_hate']
 y = train[target_col]
@@ -27,7 +27,7 @@ cv_score =[]
 
 for i,col in enumerate(target_col):
     lr = LogisticRegression(C=2,random_state = i,class_weight = 'balanced')
-    print('Building {} model for column:{''}'.format(i,col)) 
+    print('Building {} model for column:{''}'.format(i,col))
     lr.fit(X,y[col])
     prd[:,i] = lr.predict_proba(x_test)[:,1]
 
@@ -46,5 +46,5 @@ for i,col in enumerate(target_col):
 
 #prd_1 = pd.DataFrame(prd,columns=y.columns)
 #submit = pd.concat([test['id'],prd_1],axis=1)
-#submit.to_csv('submission.csv',index=False)
+#submit.to_csv('input/submission.csv',index=False)
 #submit.head()
