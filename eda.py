@@ -8,6 +8,9 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import spacy
 import re
 from nltk.corpus import stopwords
+import nltk
+
+nltk.download('stopwords')
 
 from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
@@ -104,9 +107,9 @@ def most_common_words(kind, num_words=15):
     iplot(fig, filename='bar')
 
 most_common_words("toxic")
-
 most_common_words("severe_toxic")
-
+most_common_words("obscene")
 most_common_words("threat")
-
+most_common_words("insult")
+most_common_words("identity_hate")
 most_common_words("clean")
